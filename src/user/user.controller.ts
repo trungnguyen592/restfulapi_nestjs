@@ -17,6 +17,8 @@ import { RegisterUserDto } from './dtos/registerUser';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dtos/loginUser.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { CurrentUser } from './decorators/currentUser.decorators';
+import { User } from './user.entity';
 
 @Controller('/api/v1/user')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -30,6 +32,12 @@ export class UserController {
   @UseGuards(AuthGuard)
   getAllUser() {
     return this.userService.findAll();
+  }
+
+  @Get('/current-user')
+  @UseGuards(AuthGuard)
+  getCurrentUser(@CurrentUser() currentUser: User) {
+    return currentUser;
   }
 
   @Get(':id')
