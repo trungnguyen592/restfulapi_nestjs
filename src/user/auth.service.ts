@@ -21,7 +21,6 @@ export class AuthService {
 
     //hass pass
     const hashedPassword = await bcrypt.hash(requestBody.password, 10);
-
     requestBody.password = hashedPassword;
 
     //savetodtb
