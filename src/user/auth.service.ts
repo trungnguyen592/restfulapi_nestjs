@@ -43,12 +43,12 @@ export class AuthService {
   }
 
   async login(requestBody: LoginUserDto) {
+    // Tìm người dùng qua email
     const userByEmail = await this.userService.findByEmail(requestBody.email);
     if (!userByEmail) {
       throw new BadRequestException('Invalid Credentials!');
     }
-
-    //checkpass
+    // So sánh mật khẩu
     const isMatchPass = await bcrypt.compare(
       requestBody.password,
       userByEmail.password,
@@ -56,7 +56,7 @@ export class AuthService {
     if (!isMatchPass) {
       throw new BadRequestException('Invalid Credentials!');
     }
-
+    // Tạo payload cho JWT
     const payload = {
       id: userByEmail.id,
       firstName: userByEmail.firstname,
@@ -67,7 +67,7 @@ export class AuthService {
     const access_token = await this.jwtService.signAsync(payload);
 
     return {
-      msg: 'User has been login succesfully!',
+      msg: 'User has logged in successfully!',
       access_token,
     };
   }
