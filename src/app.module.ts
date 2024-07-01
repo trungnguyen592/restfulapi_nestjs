@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { User } from './user/user.entity';
       // Chỉ định các phụ thuộc để NestJS tiêm vào useFactory
     }),
     TypeOrmModule.forFeature([User]), // Đảm bảo module này biết về thực thể User
-    UserModule,
+    UserModule, PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
